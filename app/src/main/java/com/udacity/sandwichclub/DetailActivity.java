@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,12 +65,21 @@ public class DetailActivity extends AppCompatActivity {
         TextView ingredientsTxtView = findViewById(R.id.ingredients_tv);
         TextView descriptionTxtView = findViewById(R.id.description_tv);
         TextView knownAsTxtView = findViewById(R.id.also_known_tv);
+        TextView knownAsLabelTxtView = findViewById(R.id.detail_also_known_as_label);
+        TextView originLabelTxtView = findViewById(R.id.origin_tv_label);
 
-        originTxtView.setText(sandwich.getPlaceOfOrigin());
         descriptionTxtView.setText(sandwich.getDescription());
 
-        // TODO: 18/02/2018 handle known as length
-        knownAsTxtView.setText(TextUtils.join("\n", sandwich.getAlsoKnownAs()));
+        if (sandwich.getAlsoKnownAs().size() > 0)
+            knownAsTxtView.setText(TextUtils.join("\n", sandwich.getAlsoKnownAs()));
+        else
+            knownAsLabelTxtView.setVisibility(View.INVISIBLE);
+
+        if (sandwich.getPlaceOfOrigin().isEmpty())
+            originLabelTxtView.setVisibility(View.INVISIBLE);
+        else
+            originTxtView.setText(sandwich.getPlaceOfOrigin());
+
         ingredientsTxtView.setText(TextUtils.join("\n", sandwich.getIngredients()));
 
     }
